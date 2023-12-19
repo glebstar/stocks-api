@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\StockProviderInterface;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Models\Stock;
+use JsonMachine\Items;
 
 class StockController extends Controller
 {
@@ -23,7 +24,26 @@ class StockController extends Controller
     public function getForData(): JsonResponse
     {
         try {
-            $data = $this->provider->getData();
+            // получает данные из json частями
+            $data = Items::fromString($this->provider->getData());
+            foreach ($data as $d) {
+                foreach ($d->stocks as $s) {
+                    /**
+                     * @var $stock Stock
+                     */
+                    $stock = Stock::where('id', '<>', 1)
+                        ->where('id', $s->uuid)
+                        ->first();
+                    if (!$stock) {
+                        // Общий склад
+                        $stock = Stock::find(1);
+                    }
+                    $stock->remaining()->create([
+                        'quantity' => $s->quantity,
+                    ]);
+                }
+            }
+
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

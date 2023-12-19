@@ -3,11 +3,11 @@
     "uuid": "1",
     "stocks": [
       {
-        "uuid": "1",
+        "uuid": "2",
         "quantity": 25
       },
       {
-        "uuid": "2",
+        "uuid": "3",
         "quantity": 30
       }
     ]
@@ -16,11 +16,11 @@
     "uuid": "2",
     "stocks": [
       {
-        "uuid": "1",
+        "uuid": "2",
         "quantity": 32
       },
       {
-        "uuid": "4",
+        "uuid": "8",
         "quantity": 33
       }
     ]
