@@ -45,6 +45,8 @@ class StockTest extends TestCase
     public function test_get_for_data(string $token): void
     {
         $response = $this->getJson('api/stock/get_for_data?token=' . $token);
-        $response->assertStatus(200);
+        $response
+            ->assertStatus(200)
+            ->assertJson(['success' => true]);
     }
 }
